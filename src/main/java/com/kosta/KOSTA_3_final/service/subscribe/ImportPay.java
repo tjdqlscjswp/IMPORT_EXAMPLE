@@ -18,8 +18,8 @@ public class ImportPay {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON); // 서버로 요청할 Header
 		Map<String, Object> map = new HashMap<>();
-		map.put("imp_key", "5945712414472844");
-		map.put("imp_secret", "92c551f52382ba2dfa3e77e87c83dd75250f4906f917d271ba391197849fb8a4a63d6be5d72783fd");
+		map.put("imp_key", "발급받은 키 정보");
+		map.put("imp_secret", "발급받은 키 정보");
 		Gson var = new Gson();
 		String json = var.toJson(map);
 		HttpEntity<String> entity = new HttpEntity<>(json, headers); // 서버로 요청할 Body
