@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout/layout2}">
+
+<link rel="stylesheet" type="text/css" href=/css/board/star.css>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body onload="showImage()">
+<div layout:fragment="content1">
+
+	<!-- Hero Area Start-->
+	<div class="slider-area" th:fragment="heroArea1">
+		<div class="single-slider slider-height2 d-flex align-items-center" style="min-height: 200px;">
+			<div class="container">
+				<div class="row">
+					<div class="col-xl-12">
+						<div class="hero-cap text-center">
+							<h2>리뷰</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<p>출출할 땐.....??</p>
+	<img id="introImg" border="0" style="width: 200px; height: 200px">
+	<div id="1bo_head">
+		<select id="searchType" name="sf1">
+			<option>전체</option>
+			<option value="packagename" th:selected="${pagevo.type=='pack.packagename'}">패키지</option>
+			<option value="customer" th:selected="${pagevo.type=='customer'}">작성자</option>
+
+		</select> <input type="text" id="sch_stx">
+		<button id="sch_submit" class="sir_inp" style="border:none">
+			<i class="fa fa-search">
+			 </i>
+			<span class="sound_only">검색</span>
+		</button>
+	</div>
+	
+	<div id="head_bwrp">
+           <a class="sir_b01_high" th:href="@{/board/reviewregister}" style="right: 10px; font-size: medium; font-weight: bold;" >리뷰 남기기</a>
+    </div>
+
+	
+	<div class="sir_ulwrp sir_ul01">
+	
+	<table class="table" style="font-size: 2rem">
+     <tr class="lbo_li lbo_legend lbo_legend_like">
+       <th>번호</th><th>패키지</th><th>한줄평</th><th>별점</th><th>작성자</th>
+      </tr>
+      <tr th:each="review, row:${reviewResult.content}" class="lbo_li li_bg0 lbo_like" style="z-index:30;">
+         <td >
+         <!-- ============= -->
+             <span th:text="${review.reviewId}"></span>
+         
+         </td>
+         <td>
+           <span th:text="${review.pack.packageName}" ></span>
+        
+         </td>
+         <td  style="width: 40%">
+         <span th:text="${review.review}" ></span>
+         	
+         </td>
+         <td> 
+         
+         	<div id="score">
+        	 <span th:value="${review.score}" ></span>
+        	 </div>
+        	 <div class="startRadio">
+        	 
+	<label class="startRadio__box" for="score" th:each="num:${#numbers.sequence(1,10)}"> 
+		<input type="radio" th:name="'score' + ${row}" th:value="${num}" th:checked="${review.score==num}?true:false" disabled="disabled">
+		<span class="startRadio__img"><span class="blind" th:text="${num}"></span></span>
+	</label>
+</div> 
+         </td>
+         <td>
+         <!-- 문자열의 한계치를 설정하고, length가 한계치 이상이라면 잘라낸후 …으로 표시해준다. -->
+         	<div class="email"
+					th:text="${#strings.abbreviate(review.customer.email,7)}"></div>
+         </td>
+         <td></td>
+      </tr>
+   </table>
+   </div>
+   
+   <!-- 페이징 처리 -->
+		<form id="f1" th:action="@{/board/reviewlist}" method="get">
+			<input type="hidden" name="page" th:value=${result.currentPageNum}>
+			<input type="hidden" name="size"
+				th:value=${result.currentPage.pageSize}> <input
+				type="hidden" name="type" th:value=${pagevo.type}> <input
+				type="hidden" name="keyword" th:value=${pagevo.keyword}>
+		</form>
+		<nav>
+			<ul class="pg">
+				<li class="page-item" th:if="${result.prevPage}"><a
+					th:href="${result.prevPage.pageNumber}+1">PREV</a></li>
+				<li class="page-item" th:each="pg:${result.pageList}"><a
+					th:href="${pg.pageNumber}+1"
+					th:classappend="${pg.pageNumber==result.currentPageNum-1}?active:''">
+						[[${pg.pageNumber}+1]]</a></li>
+				<li class="page-item" th:if="${result.nextPage}"><a
+					th:href="${result.nextPage.pageNumber}+1">NEXT</a></li>
+			</ul>
+		</nav>
+		<script>
+			var score = $("#score").children().val();
+			
+			console.log(score);
+			
+			
+			$("input:radio[name='score']:radio[value='"+score+"']").prop('checked', true); 
+			
+		
+		</script>
+		</div>
+		
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout/layout2}"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
+
+<head>
+<meta charset="UTF-8">
+<title>문의게시판</title>
+</head>
+<body>
+
+	<div id="con_If" layout:fragment="content1">
+		<h1 class="pg_tit">QnA</h1>
+		<div class="panel-body">
+		
+		<article class="sir_vbo">
+
+			<form id="myfrm">
+			<header class="vbo_head" >
+				<input type="hidden" id="qid" name="qid" th:value="${qna.qid}">
+				<input type="hidden" id="qreDate" name="qregDate" th:value="${qna.qregDate}">
+				
+					<label for="qtitle"></label>
+					<strong id="head_title">[[${qna.qtitle}]]</strong>
+
+<ul id="head_info">
+				 
+				<li id="info_name">작성자:<span class="sv_wrap" id="email" th:value="${qna.customer.email}"></span></li>
+				
+				<li><div class="name" th:text="${qna.customer.customerName}"></div></li>
+				
+				<li id="info_date">작성일:
+				<time th:text="${#dates.format(qna.qupdateDate, 'yyyy-MM-dd')}"></time></li>
+				
+			</ul>
+				<div id="head_img"> <img th:src="@{/images/고래밥.jpg}"> </div>
+				</header>
+				
+				
+				<section id="vbo_con">
+				
+				
+				<div>
+					<label for="qcontent"></label>
+					<br>
+					<div id="qcontent"  class="con_inner"> [[${qna.qcontent}]]</div>
+				
+				<div style="clear:both;"></div>
+				</div>
+				</section>
+				
+				<br> <br> <br>
+
+				<div th:if="${qna.customer.email}==${#authentication.name}" style="float: right;">
+					<a th:href="@{/board/qnadelete(qid=${qna.qid})}">삭제하기</a>
+				</div>
+				
+
+				<input type="hidden" name="page" th:value=${pagevo.page}> 
+				<input type="hidden" name="size" th:value=${pagevo.size}> 
+				<input type="hidden" name="type" th:value=${pagevo.type}> 
+				<input type="hidden" name="keyword" th:value=${pagevo.keyword}>
+
+			</form>
+
+
+			<!--############################### 댓글 ##########################################-->
+			<section id="vcmt_anchor" class="vbo_vcmt vbo_vcmt_chat ">
+				<article class="vcmt">
+				<table style="margin: auto; width: 100%">
+					<thead>
+						<tr>
+							<th style="width: 60%">답변</th>
+							<th style="width: 20%">작성자</th>
+							<th>작성일</th>
+						</tr>
+					</thead>
+
+					<tbody id="Table">
+
+					</tbody>
+					<tr>
+						<td>
+							<input placeholder="댓글 내용" id="replyADD" class="vcmt_content">
+						</td>
+						<td>
+						<button type='button' onclick='add(this);' sec:authorize="hasRole('ADMIN')">
+								댓글추가</button>
+						</td>
+						<td>
+							<input type="hidden" value="${#authentication.name}" id="emailADD">
+						</td>
+					</tr>
+				</table>
+
+			</article>
+	</section>
+
+</article>
+
+
+			<!-- 페이징 처리 -->
+			<form id="f1" action="" method="get">
+				<input type="hidden" name="page" th:value=${pagevo.page}> <input
+					type="hidden" name="size" th:value=${pagevo.size}> <input
+					type="hidden" name="type" th:value=${pagevo.type}> <input
+					type="hidden" name="keyword" th:value=${pagevo.keyword}>
+			</form>
+
+		</div>
+
+	
+	
+	<a th:href="@{/board/qnalist(page=${pagevo.page},size=${pagevo.size},type=${pagevo.type},keyword=${pagevo.keyword})}"
+					class="btn btn-warning modbtn2"
+					style="font-size: 10px; padding: 15px 7px;">목록보기</a>
+
+  
+  <script th:src="@{/js/qreply.js}"> </script>	
+  <script th:inline="javascript">
+$(function(e) {
+
+	(function() {
+		console.log(replyManager);
+		replyManager.getAll("[[${qna.qid}]]", printList);
+
+	})();
+
+});
+function printList(rList) {
+	console.log(rList);
+	var authName = [[${#authentication.name}]];
+	console.log("'" + authName + "'");
+	var str = "";
+	$
+			.each(
+					rList,
+					function(idx, item) {
+						str += "<tr>";
+
+						str += "<td>" + item["qreply"] + "</td>";
+						str += "<td>"
+								+ item["admin"]["customerName"];
+						str += "<td>"
+								+ formatDate(item["qrupdateDate"])
+								+ "</td> <td>";
+						if (item['admin']['email'] == authName) {
+							str += "<button  onclick='call(this);' id='modify' > 댓글수정 </button>"
+									+ "<span style=' display : none;'>"
+									+ item["qrid"]
+									+ "</span>"
+									+ "<span style=' display : none;'>"
+									+ item["admin"]["customer_id"]
+									+ "</span>"
+									+ "<button  onclick='del(this);' id='modify'> 삭제 </button>";
+						}
+						str += "</td> </tr>";
+					});
+	$("#Table").html(str);
+
+};
+
+function call(item) {
+	item.disabled = true;
+	console.log(item);
+	var reply = $(item).parent().parent().children(
+			"td:nth-child(1)");
+	var email = $(item).parent().parent().children(
+			"td:nth-child(2)");
+	var customer = $(item).parent().children("span:nth-child(3)")
+			.html();
+	var rid = $(item).parent().children("span:nth-child(2)").html();
+
+	var mod = "<tr>"
+			+ "<td><input id ='replyId'  value='"
+			+ reply.html()
+			+ "'></td>"
+			+ "<td>"
+			+ email.html()
+			+ "</td>"
+			+ "<td> 수정중 </td>"
+			+ "<td><button type='button' onclick='modReply(this);' id='save'>저장</button>"
+			+ "<span style=' display : none;'>" + rid + "</span>"
+			+ "<span style=' display : none;'>" + customer
+			+ "</span>" + "</td></tr>";
+
+	$(item).parent().parent().after(mod);
+}		
+
+function del(item) {
+
+	var qrid = $(item).parent().children("span:nth-child(2)");
+
+	var obj = {
+		"qid" : "[[${qna.qid}]]",
+		"qrid" : qrid.html()
+	};
+	replyManager.remove(obj, printList);
+	alert("삭제완료");
+
+};
+
+
+// 댓글수정
+function modReply(item) {
+	
+	var rid = $(item).parent().children("span:nth-child(2)");
+	var customer = $(item).parent().children("span:nth-child(3)");
+	var obj = {
+		"qid" : "[[${qna.qid}]]",
+		"reply" : $("#replyId").val(),
+		"customer" : customer.html(),
+		"qrid" : rid.html(),
+	};
+	console.log(obj);
+
+	replyManager.update(obj, printList);
+	alert("수정완료");
+
+};
+
+function add(item) {
+		
+	var authName = [[${#authentication.name}]];				
+	console.log(authName);
+	var obj = {
+			"qid" : "[[${qna.qid}]]",
+			"qreply" : $("#replyADD").val(),
+			"email" : authName
+	};
+	console.log(obj);
+		replyManager.add(obj, printList);
+};
+</script>
+</div>
+</body>
+</html>

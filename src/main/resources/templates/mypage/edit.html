@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+layout:decorate="~{layout/layout3}">
+<head>
+<meta charset="UTF-8">
+<title>회원정보 수정</title>
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+<!-- CSS here -->
+        <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../assets/css/owl.carousel.min.css">
+        <link rel="stylesheet" href="../../assets/css/flaticon.css">
+        <link rel="stylesheet" href="../../assets/css/slicknav.css">
+        <link rel="stylesheet" href="../../assets/css/animate.min.css">
+        <link rel="stylesheet" href="../../assets/css/magnific-popup.css">
+        <link rel="stylesheet" href="../../assets/css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="../../assets/css/themify-icons.css">
+        <link rel="stylesheet" href="../../assets/css/slick.css">
+        <link rel="stylesheet" href="../../assets/css/nice-select.css">
+        <link rel="stylesheet" href="../../assets/css/style.css">
+        <style>
+        #email,#customerName,#password,#phone_number{width: 70%;}
+ .col-lg-6{width:100%; text-align:center; margin:1% auto;
+}
+.left,.col-md-12{text-align: left;}
+#address{width: 80%;}
+        </style>
+</head>
+<body>
+
+<main>
+	<div layout:fragment="content1">
+		<div class="col-lg-6 col-md-6">
+			<div class="login_part_form">
+				<div class="login_part_form_iner">
+					<h4>회원 정보 수정</h4>
+					<hr>
+					<form th:action="@{/mypage/edit}" method="post">
+						<div class="col-md-12 form-group p_star">
+							<div class="left"></div>
+								<input type="hidden" readonly name="email" id="email" th:value="${memberinfo.email}">
+						</div>
+						<div class="col-md-12 form-group p_star">
+							<div class="left">이름</div>
+							<input type="text" th:name="customerName" th:value="${memberinfo.customerName}">
+						</div>
+						<div class="col-md-12 form-group p_star">
+							<div class='left'>비밀번호</div>
+							<input type="text" 	id="password" name="password" value="" placeholder="반드시 바꿔주세요" required/>
+						</div>
+						<div class="col-md-12 form-group p_star">
+							<div class="left">전화번호</div>
+							<input type="text" th:name="phone_number" th:value="${memberinfo.phone_number}">
+						</div>
+						<div class="col-md-12 form-group p_star">
+							<div class="left"> 주소 </div>
+								<input type="text" 	id="postnumber" th:name="postnumber" th:value="${memberinfo.postnumber}"  readonly/>
+								<br><input type="text" 	id="address" th:name="address" th:value="${memberinfo.address}" placeholder="우편 번호 검색을 눌러주세요" readonly/>
+								<input type="button" onclick="Postcode()" value="우편번호 찾기"><br>
+								<input type="text" id='addressdetail' th:name="addressdetail" th:value="${memberinfo.addressdetail}" placeholder="상세 주소 입력">
+	 					</div>
+	 					<input type="hidden" id="auth" name="auth" th:value="${memberinfo.auth}"/>
+	 						<hr>
+	 					<input class="btn" type="submit" value="정보 수정">
+        			</form>
+        		</div>
+ 		
+			</div>
+		</div>
+	</div>
+</main>
+        
+ 
+    
+    <!-- Jquery Plugins, main Jquery -->	
+    <script src="../../assets/js/plugins.js"></script>
+    <script src="../../assets/js/main.js"></script>
+   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+    function Postcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var roadAddr = data.address; // 도로명 주소 변수
+                var extraRoadAddr = ''; // 참고 항목 변수
+
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('postnumber').value = ' ' +data.zonecode;
+                document.getElementById("address").value = ' ' +roadAddr;
+                document.getElementById("address").value += ' ' +data.jibunAddress;
+                
+                // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+                if(roadAddr !== ''){
+                    document.getElementById("address").value += ' ' +extraRoadAddr;
+                } else {
+                   
+                }
+            }
+        }).open();
+    }
+    </script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>

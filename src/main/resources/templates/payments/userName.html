@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout1}">
+<head>
+<head>
+<meta charset="UTF-8">
+<title>정보</title>
+<th:block layout:fragment="style1"></th:block>
+</head>
+<body>
+	<div class="panel panel-default" layout:fragment="content1">
+		<h1>사용자정보</h1>
+		<div th:with="member=${#authentication.principal.member}">
+			<label>사용자</label>
+			<input class="form-control" name="user" th:value="${member.customer_id}">
+		</div>
+	</div>
+</body>
+</html>

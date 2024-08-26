@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout1}">
+<head>
+<meta charset="UTF-8">
+
+<title>패키지 상세정보</title>
+<th:block layout:fragment="style1"></th:block>
+</head>
+<body>
+	<h1>상세정보</h1>
+	<div class="panel panel-default" layout:fragment="content1">
+		<p th:text="${pack.packageId}">패키지번호</p>
+		<a th:href="@{/payments/subPayment(pno=${pack.packageId})}"  th:text="${pack.packageName}">패키지이름</a>
+		<p th:text="${pack.price}">가격</p>
+	</div>
+</body>
+</html>

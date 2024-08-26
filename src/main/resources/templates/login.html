@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zxx" xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout/layout3}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>로그인</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+    <!-- CSS here -->
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+        <link rel="stylesheet" href="assets/css/flaticon.css">
+        <link rel="stylesheet" href="assets/css/slicknav.css">
+        <link rel="stylesheet" href="assets/css/animate.min.css">
+        <link rel="stylesheet" href="assets/css/magnific-popup.css">
+        <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="assets/css/themify-icons.css">
+        <link rel="stylesheet" href="assets/css/slick.css">
+        <link rel="stylesheet" href="assets/css/nice-select.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <main>
+     <div layout:fragment="content1">
+        <!-- Hero Area Start-->
+        <div class="slider-area ">
+            <div class="single-slider slider-height2 d-flex align-items-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="hero-cap text-center">
+                                <h2>Login</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Hero Area End-->
+        <!--================login_part Area =================-->
+        <section class="login_part section_padding ">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="login_part_text text-center">
+                            <div class="login_part_text_iner">
+                                <h2>저희 사이트에 처음이신가요?</h2>
+                                <p>간식 구독 서비스는 회원제로 운영되고 있습니다.
+                                    가입을 통해 혜택을 누려보세요</p>
+                                <a href="/auth/joinForm" class="btn_3">회원 가입</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="login_part_form">
+                            <div class="login_part_form_iner">
+                                <h3>어서오세요 ! <br>
+                                    지금 로그인해주세요</h3>
+                                <form class="row contact_form" action="/login" method="post" novalidate="novalidate">
+                                    <div class="col-md-12 form-group p_star">
+                                        <input type="text" class="form-control" id="username" name="username" value=""
+                                            placeholder="이메일">
+                                    </div>
+                                    <div class="col-md-12 form-group p_star">
+                                        <input type="password" class="form-control" id="password" name="password" value=""
+                                            placeholder="비밀번호">
+                                    </div>
+                                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+                                    <div class="col-md-12 form-group">
+                                        <div class="creat_account d-flex align-items-center" >
+                                            <input type="checkbox" id="f-option" name="selector">
+                                            <label for="f-option" >로그인 유지</label>
+                                        </div>
+                                         <div th:if="${param.error}" class="alert alert-error">    
+                    				<p class="lost_pass">존재하지 않는 이메일이나 비밀번호입니다</p>
+                           				 </div>
+                                        <button type="submit" value="submit" class="btn_3">
+                                            log in
+                                        </button>
+                                        <a class="lost_pass" href="/auth/passwordFind">비밀번호를 잊으셨나요?</a>
+                                    </div>
+                                </form>
+                                
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+        <!--================login_part end =================-->
+        </div>
+    </main>
+   
+</body>
+    
+</html>

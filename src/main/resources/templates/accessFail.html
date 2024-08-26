@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html
+xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<title>권한없음</title>
+</head>
+<body>
+<h2>해당 페이지에 대한 권한이 없습니다.</h2>
+<a th:href="@{/auth/login}">여기</a>에서 로그인해주세요
+</body>
+</html>

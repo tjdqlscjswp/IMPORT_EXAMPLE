@@ -1,0 +1,8 @@
+<div class="product" th:each="productlist:${productlist}">
+	<img class="product_img" style="width: 125px; height: 127px;" th:src="@{/images/product_images/}+${productlist.productName}+.jpg">
+	<button onclick="adminProductDelete(this)" class="product_delete_btn">X</button>
+	<div class="product_name" th:text="${productlist.productName}"></div>
+	<div class="product_price" th:text="${productlist.price}"></div>
+	<span style="float: left; padding-top: 8px">¿ø</span>
+	<div class="product_id" th:text="${productlist.productId}" style="display:none"></div>
+</div>

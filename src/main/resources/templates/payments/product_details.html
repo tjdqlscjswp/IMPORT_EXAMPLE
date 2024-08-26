@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zxx" xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout/layout3}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>패키지 상세정보</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+
+<style>
+	a{
+		color:black !important;
+	}
+	a:hover{
+		color:red;
+	}
+	
+	
+	#product_detail_title{
+		margin-top: 4%;
+		margin-left: 4%;
+		
+	}
+	#product_detail_title.h2{
+		font-size: 1.2em;
+		
+	}
+	
+</style>
+</head>
+    
+
+<body>
+
+    <main>
+    <div layout:fragment="content1">
+        <!-- Hero Area Start-->
+        <div class="slider-area ">
+            <div class="single-slider slider-height2 d-flex align-items-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="hero-cap text-center">
+                                <h2>선택 패키지 정보</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Hero Area End-->
+        
+        
+        
+        <!--================Single Product Area =================-->
+          <div class="product_image_area">
+            <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6" style="float:left; margin-left:-50px; height: 600px;">
+	                <div class="product_img_slide owl-carousel" style="width: 500px; height:auto; ">
+	                    <div class="single_product_img">
+	                        <img th:src="|../assets/img/gallery/${pack.img}.jpg|" width="60%"; height="auto">
+	                    </div>
+
+	                </div>
+                </div>
+                <div class="col-lg-6"  style="float:left;height: 600px;">
+	    
+	                   	<h3 style="color:black"><a class = "packlist" th:href="@{/payments/payment(pno=${pack.packageId})}"></a></h3>
+	                    	<h3 th:text="${pack.packageName}"></h3>
+	                    <div id="pro_detail" style="margin-top: 30px; margin-bottom: 30px;">
+							<h4>구성품 정보</h4>
+							<div style="margin-left: 30px;">
+								<ul th:each="list:${productList}" style="list-style-type : square; font-size: 1.2em; line-height: 200%;">
+									<li th:text="${list}" style="line-height: 200%;">
+								</ul>
+							</div>
+							<div style="margin-top: 30px;">
+								<h4>가격</h4>
+								<p th:text="${pack.price}"></p>
+							</div>	
+						</div>
+                </div>
+                
+			<div class="add_to_cart">
+			     <a class="btn_3" th:href="@{payment(pno=${pack.packageId})}">정기구독</a>
+			</div>
+            </div>
+            </div>
+        </div>
+ 		</div>
+        <!--================End Single Product Area =================-->
+
+    </main>
+   
+
+</body>
+
+</html>

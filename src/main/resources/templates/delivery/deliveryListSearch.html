@@ -1,0 +1,42 @@
+<table class="type09">
+	<thead>
+		<tr>
+			<th class="row1" scope="cols">패키지명</th>
+			<th class="row2" scope="cols">주소</th>
+			<th class="row3" scope="cols">주문자</th>
+			<th class="row4" scope="cols">배송날짜</th>
+		</tr>
+	</thead>
+	<tbody id="delivery_table">
+		<tr th:each="deliverylist:${deliverylist}">
+			<th scope="row" th:text="${deliverylist.pack.packageName}"></th>
+			<td th:text="${deliverylist.customer.address}"></td>
+			<td th:text="${deliverylist.customer.customerName}"></td>
+			<td th:text="${deliverylist.deliveryDate}"></td>
+		</tr>
+	</tbody>
+</table>
+<!-- 페이징 처리 -->
+
+<div id="f1" class="f1">
+	<input type="hidden" name="page" th:value=${result.currentPageNum}>
+	<input type="hidden" name="size" th:value=${result.currentPage.pageSize}>
+	<input type="hidden" name="date" value="">
+</div>
+<div class="pageNumbers">
+	<nav>
+		<ul class="pagination">
+			<li class="page-item" th:if="${result.prevPage}">
+				<a th:href="${result.prevPage.pageNumber}+1" class="pagePrev">PREV</a>
+			</li>
+			<li class="page-item" th:each="pg:${result.pageList}">
+				<a th:href="${pg.pageNumber}+1"
+				th:classappend="${pg.pageNumber==result.currentPageNum-1}?active:''" class="pageNum">
+					[[${pg.pageNumber}+1]]</a>
+			</li>
+			<li class="page-item" th:if="${result.nextPage}">
+				<a th:href="${result.nextPage.pageNumber}+1" class="pageNext">NEXT</a>
+			</li>
+		</ul>
+	</nav>
+</div>

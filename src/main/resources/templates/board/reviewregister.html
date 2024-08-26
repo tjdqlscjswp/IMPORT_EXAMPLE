@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+		layout:decorate="~{layout/layout1}">
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
+
+<head>
+<meta charset="UTF-8">
+<title>리뷰</title>
+<style>
+        table.table2{
+                border-collapse: separate;
+                border-spacing: 1px;
+                text-align: left;
+                line-height: 1.5;
+                border-top: 1px solid #ccc;
+                margin : 20px 10px;
+        }
+        table.table2 tr {
+                 width: 50px;
+                 padding: 10px;
+                font-weight: bold;
+                vertical-align: top;
+                border-bottom: 1px solid #ccc;
+        }
+        table.table2 td {
+                 width: 100px;
+                 padding: 10px;
+                 vertical-align: top;
+                 border-bottom: 1px solid #ccc;
+        }
+
+ 
+</style>
+<link rel="stylesheet" type="text/css" href=/css/board/star.css>
+</head>
+<body>
+
+	<div class="panel-body" layout:fragment="content1">
+
+		<form th:action="@{reviewregister}" method="post">
+
+		
+<table  style="margin:5% auto;">
+                <tr>
+                <td height=20 align= center bgcolor=red><font color=white size="5px"> 리뷰 남기기 </font></td>
+                </tr>
+                <tr>
+                <td bgcolor=white>
+                <table class = "table2">
+                 <tr>
+                        <td >작성자</td>
+                        <td><p sec:authentication="name"></p> </td>
+                        </tr>
+                        <tr>
+                        <td>패키지</td>
+                        <td>
+                        <label for="pack"></label>
+                        <select id="pack" name="pack">
+						<option value="">----- 패키지를 선택하세요-----</option>
+						<option th:each="sub, i :${subscribes}"  th:value="${sub.pack.packageId}" th:text = "${sub.pack.packageName}" th:disabled="${arr[i.index]}">
+						</option>
+
+					</select> </td>
+                        </tr>
+ 
+                        <tr>
+                        <td>내용</td>
+                        <td><label for="review"></label><textarea name="review"  cols=85 rows=15></textarea></td>
+                        </tr>
+                        <tr>
+                        <td>별점</td>
+                        <td><label for="score"></label>
+                        <div class="startRadio">
+	<label class="startRadio__box" for="score">
+		<input type="radio" name="score" value="1">
+		<span class="startRadio__img"><span class="blind">1</span></span>
+	</label>
+	<label class="startRadio__box">
+		<input type="radio" name="score" value="2">
+		<span class="startRadio__img"><span class="blind">2</span></span>
+	</label>
+	<label class="startRadio__box">
+		<input type="radio" name="score"  value="3">
+		<span class="startRadio__img"><span class="blind">3</span></span>
+	</label>
+	<label class="startRadio__box">
+		<input type="radio" name="score"  value="4">
+		<span class="startRadio__img"><span class="blind">4</span></span>
+	</label>
+	<label class="startRadio__box">
+		<input type="radio" name="score"  value="5">
+		<span class="startRadio__img"><span class="blind">5</span></span>
+	</label>
+	<label class="startRadio__box">
+		<input type="radio" name="score"  value="6">
+		<span class="startRadio__img"><span class="blind">6</span></span>
+	</label>
+	<label class="startRadio__box">
+		<input type="radio" name="score"  value="7">
+		<span class="startRadio__img"><span class="blind">7</span></span>
+	</label>
+	<label class="startRadio__box">
+		<input type="radio" name="score"  value="8">
+		<span class="startRadio__img"><span class="blind">8</span></span>
+	</label>
+	<label class="startRadio__box">
+		<input type="radio" name="score"  value="9">
+		<span class="startRadio__img"><span class="blind">9</span></span>
+	</label>
+	<label class="startRadio__box">
+		<input type="radio" name="score"  value="10">
+		<span class="startRadio__img"><span class="blind">10</span></span>
+	</label>
+
+</div></td>
+                        </tr>
+                        </table>
+ 
+                       
+                        </table>
+ 
+						<div style="text-align: center;">
+                        <button type="submit" class="btn" id="btn-submit" disabled="disabled">등록하기</button>
+						<button type="reset" class="btn">reset</button>
+						</div>
+
+		</form>
+	<script th:inline="javascript">
+	$("select[name=pack]").bind('change', function() {
+
+			 var val = $(this).val();
+
+			 console.log(val);
+			if (val === "") {
+
+			$('#btn-submit').attr("disabled", true);
+
+			} else {
+
+			$('#btn-submit').attr("disabled", false);
+			} 
+	});
+</script>
+	</div>
+
+
+</body>
+</html>

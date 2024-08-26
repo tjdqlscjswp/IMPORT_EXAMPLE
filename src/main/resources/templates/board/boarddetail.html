@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout/layout2}">
+<script th:src="@{/js/reply.js}"></script>	
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
+
+<head>
+<meta charset="UTF-8">
+<title>스낵24-자유게사판</title>
+</head>
+<body>
+	
+	<div id="con_If" layout:fragment="content1">
+		<h1 class="pg_tit">자유게시판</h1>
+		<div class="panel-body">
+
+			<article class="sir_vbo">
+			
+			<form id="myfrm">
+				<header class="vbo_head">
+				
+				<input type="hidden" id="bid" name="bid" th:value="${board.bid}">
+				<input type="hidden" id="redate" name="bregdate" th:value="${board.bregdate}">
+				<label for="email"></label>
+				<input type="hidden" id="email" name="email" th:value="${board.customer.email}">
+
+					<label for="btitle"></label>
+					<strong id="head_title">[[${board.btitle}]]</strong>
+				
+				<ul id="head_info">
+				
+				<li id="info_name">작성자:<span class="sv_wrap" th:text="${#strings.abbreviate(board.customer.email,7)}"></span></li>
+
+				<li id="info_date">작성일:<time th:text="${#dates.format(board.bupdatedate, 'yyyy-MM-dd')}"></time></li>
+			
+				</ul>
+				
+				<div id="head_img"> <img th:src="@{/images/고래밥.jpg}"> </div>
+				
+				</header>
+				
+				<section id="vbo_con">
+				
+				<div id="contentButton">
+					<label for="bcontent"></label><br>
+					
+					<div id="bcontent" class="con_inner">
+						[[${board.bcontent}]]
+					</div>
+					<div style="clear:both;"></div>
+					
+				</div>
+				
+				</section>
+				
+				<br> <br> <br>
+
+					<div th:if="${board.customer.email}==${#authentication.name}" style="float: right;">
+						<a href="javascript:boardMod()" >수정하기</a>
+						<a th:href="@{/board/delete(bid=${board.bid})}" >삭제하기</a>
+					</div>
+				<input type="hidden" name="page" th:value=${pagevo.page}> 
+				<input type="hidden" name="size" th:value=${pagevo.size}> 
+				<input type="hidden" name="type" th:value=${pagevo.type}> 
+				<input type="hidden" name="keyword" th:value=${pagevo.keyword}>
+
+			</form>
+
+
+			<!-- ############################################### 댓글 #################################################-->
+
+	<section id="vcmt_anchor" class="vbo_vcmt vbo_vcmt_chat ">
+			
+
+
+				<article class="vcmt">
+				<table style="margin: auto; width: 100%">
+					<thead>
+						<tr>
+							<th style="width: 60%">내용</th>
+							<th style="width: 20%">작성자</th>
+							<th>작성일</th>
+						</tr>
+					</thead>
+					<tbody id="Table">
+
+					</tbody>
+					<tr>
+						<td>
+							<input placeholder="댓글 내용" id="replyADD" class="vcmt_content">
+						</td>
+						<td>
+							<button type='button' onclick='add(this);'>댓글추가</button>
+						</td>
+						<td>
+						<input type="hidden" value="${#authentication.name}" id="emailADD">
+							
+						</td>
+					</tr>
+				</table>
+				</article>
+</section>
+</article>
+
+			<!-- 페이징 처리 -->
+			<form id="f1" action="" method="get">
+				<input type="hidden" name="page" th:value=${pagevo.page}> <input
+					type="hidden" name="size" th:value=${pagevo.size}> <input
+					type="hidden" name="type" th:value=${pagevo.type}> <input
+					type="hidden" name="keyword" th:value=${pagevo.keyword}>
+			</form>
+
+		</div>
+
+	
+
+	<a th:href="@{/board/boardlist(page=${pagevo.page},size=${pagevo.size},type=${pagevo.type},keyword=${pagevo.keyword})}"
+		class="btn btn-warning modbtn2" 
+		style="font-size: 10px; padding: 15px 7px;">목록보기</a>
+		
+	<script th:src="@{/js/reply.js}"> </script>	
+  <script th:inline="javascript">
+
+	$(function(e) {
+
+			(function() {
+				console.log(replyManager);
+				replyManager.getAll("[[${board.bid}]]", printList);
+
+			})();
+
+		});
+		function printList(rList) {
+			console.log(rList);
+			var authName = [[${#authentication.name}]];
+			console.log("'" + authName + "'");
+			var str = "";
+			$
+					.each(
+							rList,
+							function(idx, item) {
+								str += "<tr>";
+
+								str += "<td>" + item["reply"] + "</td>";
+								str += "<td>"
+										+ item['customer']['email'].substr(
+												0, 4) + "***" + "</td>";
+								str += "<td>"
+										+ formatDate(item["rupdatedate"])
+										+ "</td> <td>";
+										console.log("'" + item['customer']['email'] + "'");	
+								if (item['customer']['email'] == authName) {
+									console.log("yes");
+									str += "<button  onclick='call(this);' id='modify'> 수정 </button>"
+											+ "<span style=' display : none;'>"
+											+ item["rid"]
+											+ "</span>"
+											+ "<span style=' display : none;'>"
+											+ item["customer"]["customer_id"]
+											+ "</span>"
+											+ "<button  onclick='del(this);' id='modify'> 삭제 </button>";
+								}
+								str += "</td> </tr>";
+							});
+			$("#Table").html(str);
+
+		};
+		function call(item) {
+			item.disabled = true;
+			console.log(item);
+			var reply = $(item).parent().parent().children(
+					"td:nth-child(1)");
+			var email = $(item).parent().parent().children(
+					"td:nth-child(2)");
+			var customer = $(item).parent().children("span:nth-child(3)")
+					.html();
+			var rid = $(item).parent().children("span:nth-child(2)").html();
+
+			var mod = "<tr>"
+					+ "<td><input id ='replyId'  value='"
+					+ reply.html()
+					+ "'></td>"
+					+ "<td>"
+					+ email.html()
+					+ "</td>"
+					+ "<td> 수정중 </td>"
+					+ "<td><button type='button' onclick='modReply(this);' id='save'>저장</button>"
+					+ "<span style=' display : none;'>" + rid + "</span>"
+					+ "<span style=' display : none;'>" + customer
+					+ "</span>" + "</td></tr>";
+
+			$(item).parent().parent().after(mod);
+		}	
+		
+		function del(item) {
+
+			var rid = $(item).parent().children("span:nth-child(2)");
+
+			var obj = {
+				"bid" : "[[${board.bid}]]",
+				"rid" : rid.html()
+			};
+			replyManager.remove(obj, printList);
+			alert("삭제완료");
+
+		};
+
+
+		// 댓글수정
+		function modReply(item) {
+			
+			var rid = $(item).parent().children("span:nth-child(2)");
+			var customer = $(item).parent().children("span:nth-child(3)");
+			var obj = {
+				"bid" : "[[${board.bid}]]",
+				"reply" : $("#replyId").val(),
+				"customer" : customer.html(),
+				"rid" : rid.html(),
+			};
+			console.log(obj);
+
+			replyManager.update(obj, printList);
+			alert("수정완료");
+
+		};
+
+		function add(item) {
+
+			var authName = [[${#authentication.name}]];				
+			console.log(authName);
+			var obj = {
+					"bid" : "[[${board.bid}]]",
+					"reply" : $("#replyADD").val(),
+					"email" : authName
+			};
+			console.log(obj);
+				replyManager.add(obj, printList);
+		};
+		
+		function boardMod() {
+			
+			$('#bcontent').contents().unwrap().wrap( '<textarea name="bcontent"> </textarea>' );
+			$('#btitle').contents().unwrap().wrap( '<textarea name="btitle"> </textarea>' );
+			$('#contentButton').after("<input type='button' onclick='modifyBoard(this);' value='수정완료'>");
+		
+			
+		};
+		
+		function modifyBoard(item, callback) {
+			var myfrm = $("#myfrm");
+			myfrm.submit();
+		} 
+  </script>
+</div>
+</body>
+</html>

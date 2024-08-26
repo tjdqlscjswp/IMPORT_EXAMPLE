@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+			layout:decorate="~{layout/layout2}">
+
+<head>
+<meta charset="UTF-8">
+<title>문의하기</title>
+<style>
+        table.table2{
+                border-collapse: separate;
+                border-spacing: 1px;
+                text-align: left;
+                line-height: 1.5;
+                border-top: 1px solid #ccc;
+                margin : 20px 10px;
+        }
+        table.table2 tr {
+                 width: 50px;
+                 padding: 10px;
+                font-weight: bold;
+                vertical-align: top;
+                border-bottom: 1px solid #ccc;
+        }
+        table.table2 td {
+                 width: 100px;
+                 padding: 10px;
+                 vertical-align: top;
+                 border-bottom: 1px solid #ccc;
+        }
+
+ 
+</style>
+</head>
+<body>
+
+	
+	<div layout:fragment="content1">
+		<div class="panel-body">
+		
+			<form th:action="@{qnaregister}" method="post">
+					<table  style="margin:5% auto;">
+                <tr>
+                <td height=20 align= center bgcolor=red><font color=white size="5px"> 문의하기 </font></td>
+                </tr>
+                <tr>
+                <td bgcolor=white>
+			 <table class = "table2">
+                        <tr>
+                        <td >작성자</td>
+                        <td><p sec:authentication="name"></p> </td>
+                        </tr>
+ 
+                        <tr>
+                        <td>제목</td>
+                        <td><input type = text name="qtitle" size=60></td>
+                        </tr>
+ 
+                        <tr>
+                        <td>내용</td>
+                        <td><textarea name="qcontent"  cols=85 rows=15></textarea></td>
+                        </tr>
+                        </table>
+ 
+                       
+                        </table>
+ 
+						<div style="text-align: center;">
+                        <button type="submit" class="btn">등록하기</button>
+						<button type="reset" class="btn">reset</button>
+						</div>
+			</form>
+
+		</div>
+		</div>
+
+
+</body>
+</html>

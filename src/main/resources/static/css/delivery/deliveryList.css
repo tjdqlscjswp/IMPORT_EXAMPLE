@@ -1,0 +1,66 @@
+#here {
+	/* display: none; */
+}
+table.type09 {
+	border-collapse: collapse;
+	text-align: left;
+	line-height: 1.5;
+}
+table.type09 thead th {
+	font-weight: bold;
+	vertical-align: top;
+	color: #369;
+	border-bottom: 3px solid #036;
+}
+table.type09 tbody th {
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: top;
+	border-bottom: 1px solid #ccc;
+	background: #f3f6f7;
+}
+table.type09 td {
+	padding: 10px;
+	vertical-align: top;
+	border-bottom: 1px solid #ccc;
+}
+.deliveryList {
+	margin-top: 114px;
+}
+.row1 {
+	width: 115px;
+}
+.row2 {
+	width: 390px;
+}
+.row3 {
+	width: 62px;
+}
+.row4 {
+	width: 100px;
+}
+.pagePrev, .pageNext, .pageNum {
+	color: black;
+}
+.pagePrev:hover, .pageNext:hover, .pageNum:hover {
+	color: gray;
+}
+nav {
+	display: inline-block;
+	list-style:none;
+	margin:0;
+	padding:0;
+	text-align:center;
+}
+nav li {
+  display:inline;
+}
+nav a {
+  display:inline-block;
+  padding:10px;
+}
+.pageNumbers {
+	text-align: center;
+    border: 1px solid #ccc;
+    border-width: 1px 0;
+}

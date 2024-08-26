@@ -1,0 +1,402 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="zxx" >
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>스낵24, 간편한 간식생활을 만나보세요!</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="./assets/js/jquery.js"></script>
+    <script src="./assets/js/jquery.fadethis.js"></script>
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/slicknav.css">
+    <link rel="stylesheet" href="assets/css/animate.min.css">
+    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/css/themify-icons.css">
+    <link rel="stylesheet" href="assets/css/slick.css">
+    <link rel="stylesheet" href="assets/css/nice-select.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href=/css/board/star.css>
+
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap'); 
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
+
+    @import url("https://fonts.googleapis.com/css?family=Rubik:700&display=swap");
+* {
+  box-sizing: border-box;
+}
+*::before, *::after {
+  box-sizing: border-box;
+}
+#ghostbtn{
+	font-size : 1.2em;
+	
+	padding: 25px 40px;
+	width : 300px;
+	height:auto;
+	border: 3px solid #d9cbb3;
+	color: #F1C164;
+	text-align: center; 
+	margin-left: 1%;
+	
+	}
+#ghostbtn:hover {
+	background-color:#d9cbb3;
+	color:black;
+
+
+}
+
+</style>
+
+
+
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap'); 
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
+    	
+	@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+	</style>
+
+
+</head>
+
+<body>
+    <!--? Preloader Start -->
+<!-- 	<input type="hidden" id="auth" th:value="${#authentication.principal.member.auth}"> -->
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="/images/snackLogo.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Preloader Start -->
+    <header>
+        <!-- Header Start -->
+        <div class="header-area">
+            <div class="main-header header-sticky">
+                <div class="container-fluid">
+                    <div class="menu-wrapper">
+                        <!-- Logo -->
+                        <div class="logo">
+							<a href="/index"><img src="/images/snackLogo.jpg"
+								alt="" style="width:97px; height:67px"></a>
+						</div>
+                        <!-- Main-menu -->
+                        <div class="main-menu d-none d-lg-block">
+                            <nav>                                                
+                                <ul id="navigation">  
+                                    <li><a href="/index">Home</a></li>
+                                    <li><a href="">구독 서비스</a>
+                                   		<ul class="submenu">
+                                            <li><a href="/payments/shop">월간 간식</a></li>
+                                            <li><a href="/product/customPackaging3">나만의 간식 팩</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="/board/boardlist">게시판</a>
+                                        <ul class="submenu">
+                                            <li><a href="/board/reviewlist">한줄평</a></li>
+                                            <li><a href="/board/boardlist">과자갤러리</a></li>
+                                            <li><a href="/board/qnalist">문의</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="">회원정보</a>
+                                        <ul class="submenu">
+                                            <li sec:authorize="isAnonymous()"><a href="/login">로그인</a></li>
+                                            <li sec:authorize="isAuthenticated()"><a href="/logout">로그아웃</a></li>
+                                            <li><a href="/mypage/profile">마이페이지</a></li>
+
+                                        </ul>
+                                    </li>
+                                    <li class="admin-menu"><a href="">관리자</a>
+                                    	<ul class="submenu">
+                                            <li><a href="/product/adminMakeProductAndPackage">패키지/제품 관리</a></li>
+                                            <li><a href="/delivery/deliveryList">배송일정</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <!-- Header Right -->
+                        <div class="header-right">
+                            <ul>
+                                <li>
+                                    <div class="nav-search search-switch">
+                                        <span class="flaticon-search"></span>
+                                    </div>
+                                </li>
+                                <li sec:authorize="isAnonymous()"> <a href="/login"><span class="flaticon-user"></span></a></li>
+                                <li sec:authorize="isAuthenticated()"> <a href="/mypage/profile"><span class="flaticon-user"></span></a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Mobile Menu -->
+                    <div class="col-12">
+                        <div class="mobile_menu d-block d-lg-none"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Header End -->
+    </header>
+    <main>
+
+<!--? slider Area Start -->
+		<div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="margin-top:50px;">
+
+		  <div class="carousel-inner">
+		    <div class="carousel-item active ">
+		      <img class="d-block w-100" style="width: auto; height: 800px;" src="/images/carousel_icecream.jpg" alt="First slide">
+		      <div class="carousel-caption" style = "margin-bottom: 25%; margin-left: 1%;">
+		      	<h1 style="font-family: 'Staatliches', cursive; font-size: 6em; text-align: left; 
+
+		      	color: #F1C164; text-shadow: 5px 5px #2D63A7; margin: 0;">MONTHLY SNACK<br> DELIVERY SERVICE</h1>
+
+			  </div>
+			  <div class="carousel-caption" style = " margin-bottom: 15%; margin-left: 1%;">
+		      	<h2 style=" text-align: left; color: white; margin: 0; font-size: 2.5em;"> 다양한 구성의 간식을<br> 매달 배송해드립니다!</h2>
+			  </div>
+			  
+			  
+			  <div class="carousel-caption" style = " margin-bottom: 1%;">
+
+	    	<a href="/payments/shop"><button id="ghostbtn" style="margin-bottom:10%;; float:left;">다양한 패키지 둘러보기!</button></a> 
+			  </div>
+		    </div>
+		    	
+		    
+		    <!-- 두번째 -->
+		    <div class="carousel-item" >
+
+		      <img class="d-block w-100" style="width: auto; height: 800px;" src="/images/carousel_nut.jpg" alt="Second slide" >
+		      <div class="carousel-caption" style = "margin-bottom: 25%; margin-left: 1%;">
+		      	<h1 style="font-family: 'Staatliches', cursive; font-size: 6em; text-align: left; 
+
+		      	color: #F1C164; text-shadow: 5px 5px #2D63A7; margin: 0;">MAKE YOUR<br> OWN PACKAGE</h1>
+
+			  </div>
+			  <div class="carousel-caption" style = " margin-bottom: 15%; margin-left: 1%;">
+		      	<h2 style=" text-align: left; color: white; margin: 0; font-size: 2.5em;"> 취향에 맞는 간식을 골라<br> 나만의 패키지로!</h2>
+
+			  </div>
+			  
+			  <div class="carousel-caption" style = " margin-bottom: 1%;">
+
+	    	<a href="/product/customPackaging3"><button id="ghostbtn" style="margin-bottom:10%;; float:left;">패키지 만들기</button></a> 
+			  </div>
+		    </div>
+
+
+		  </div>
+		  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+		    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		    <span class="sr-only">Previous</span>
+		  </a>
+		  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+		    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+		    <span class="sr-only">Next</span>
+		  </a>
+		</div>
+        <!-- slider Area End-->
+
+        <!--? Popular Items Start -->
+        <div class="popular-items section-padding30">
+            <div class="container">
+                <!-- Section tittle -->
+                <div class="row justify-content-center">
+                    <div class="col-xl-7 col-lg-8 col-md-10">
+                        <div class="section-tittle mb-70 text-center">
+                            <h2>인기 패키지</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" th:each="pack, packState2:${plist}" style="display: inline-block; margin-left:10px;">
+                <div class="slide-bottom">
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6" style="display: inline;">
+                        <div class="single-popular-items mb-50 text-center" style="margin-left:50px; width:300px; height:auto; text-align: center;">
+                            <div class="popular-img">
+                           <img th:src="|assets/img/gallery/${pack.img}.jpg|"  alt="">
+
+                                <div class="img-cap"> 
+                                    <a th:href="@{/payments/product_details(pno=${pack.packageId})}"><span>상세 정보</span></a>
+                                </div>
+
+                            </div>
+                            <div class="popular-caption" style="text-align: center;">
+                                <h3><a href="product_details.html" th:text="${pack.packageName}"></a></h3>
+                                <span  th:text="|${pack.price}원|">(가격)</span>
+                            </div>
+                             <div class="startRadio">
+                             
+                                <label class="startRadio__box" for="score" th:each="num:${#numbers.sequence(1,10)}"> 
+									<input type="radio" th:name="'score' + ${packState2}" th:value="${num}" th:checked="${pack.score>=num}?true:false" disabled="disabled">
+									<span class="startRadio__img"><span class="blind" th:text="${num}"></span></span>
+								</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <!-- Button -->
+                <div class="row justify-content-center">
+                    <div class="room-btn pt-70"> 
+                        <a href="/shop" class="btn view-btn1">더 많은 패키지 보기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Popular Items End -->
+
+    </main>
+    <footer>
+        <!-- Footer Start-->
+        <div class="footer-area footer-padding">
+            <div class="container">
+                <div class="row d-flex justify-content-between">
+                    <div class="col-xl-3 col-lg-3 col-md-5 col-sm-6">
+                        <div class="single-footer-caption mb-50">
+                            <div class="single-footer-caption mb-30">
+                                <!-- logo -->
+                                <div class="footer-logo">
+                                    <a href="index.html"><img src="images/snackLogo.jpg" width="200px" alt=""></a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-md-3 col-sm-5">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>Quick Links</h4>
+                                <ul>
+                                    <li><a href="#">About</a></li>
+                                    <li><a href="#"> Offers & Discounts</a></li>
+                                    <li><a href="#"> Get Coupon</a></li>
+                                    <li><a href="#">  Contact Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-7">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>New Products</h4>
+                                <ul>
+                                    <li><a href="#">Woman Cloth</a></li>
+                                    <li><a href="#">Fashion Accessories</a></li>
+                                    <li><a href="#"> Man Accessories</a></li>
+                                    <li><a href="#"> Rubber made Toys</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-5 col-sm-7">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>Support</h4>
+                                <ul>
+                                    <li><a href="#">Frequently Asked Questions</a></li>
+                                    <li><a href="#">Terms & Conditions</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Report a Payment Issue</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Footer bottom -->
+                <div class="row align-items-center">
+                    <div class="col-xl-7 col-lg-8 col-md-7">
+                        <div class="footer-copy-right">
+                            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>                  
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-4 col-md-5">
+                        <div class="footer-copy-right f-right">
+                            <!-- social -->
+                            <div class="footer-social">
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="https://www.facebook.com/sai4ull"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-behance"></i></a>
+                                <a href="#"><i class="fas fa-globe"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End-->
+    </footer>
+    <!--? Search model Begin -->
+    <div class="search-model-box">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-btn">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Searching key.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search model end -->
+
+
+    <!-- JS here -->
+    <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
+
+    <!-- Jquery, Popper, Bootstrap -->
+    <!-- <!-- <script src="./assets/js/vendor/jquery-1.12.4.min.js"></script> -->
+    <script src="./assets/js/popper.min.js"></script>
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <!-- Jquery Mobile Menu -->
+    <script src="./assets/js/jquery.slicknav.min.js"></script>
+
+    <!-- Jquery Slick , Owl-Carousel Plugins -->
+    <script src="./assets/js/owl.carousel.min.js"></script>
+    <script src="./assets/js/slick.min.js"></script>
+
+    <!-- One Page, Animated-HeadLin -->
+    <script src="./assets/js/wow.min.js"></script>
+    <script src="./assets/js/animated.headline.js"></script>
+    <script src="./assets/js/jquery.magnific-popup.js"></script>
+
+    <!-- Scrollup, nice-select, sticky -->
+    <script src="./assets/js/jquery.scrollUp.min.js"></script>
+    <script src="./assets/js/jquery.nice-select.min.js"></script>
+    <script src="./assets/js/jquery.sticky.js"></script>
+
+    <!-- contact js -->
+    <script src="./assets/js/contact.js"></script>
+    <script src="./assets/js/jquery.form.js"></script>
+    <script src="./assets/js/jquery.validate.min.js"></script>
+    <script src="./assets/js/mail-script.js"></script>
+    <script src="./assets/js/jquery.ajaxchimp.min.js"></script>
+
+    <!-- Jquery Plugins, main Jquery -->	
+    <script src="./assets/js/plugins.js"></script>
+    <script src="./assets/js/main.js"></script>
+
+
+	<script>
+		$(window).fadeThis();
+
+		if(($('#auth').val()!="ADMIN")) {
+			$('.admin-menu').hide();
+		}
+	</script>
+</body>
+</html>
